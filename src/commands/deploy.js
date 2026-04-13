@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import ora from 'ora';
 import { log, checkVercelCli } from '../lib/logger.js';
 import { requireConfig } from '../lib/config.js';
@@ -34,38 +34,50 @@ export function deployCommand() {
 
       const cwd = process.cwd();
       const token = options.token || process.env.VERCEL_TOKEN;
-      const tokenFlag = token ? `--token ${token}` : '';
-      const prodFlag = options.prod ? '--prod' : '';
 
-      const vercelArgs = ['vercel', tokenFlag, prodFlag]
-        .filter(Boolean)
-        .join(' ');
+      const vercelArgs = ['vercel'];
+      if (token) {
+        vercelArgs.push('--token', token);
+      }
+      if (options.prod) {
+        vercelArgs.push('--prod');
+      }
 
       const spinner = ora(
         `Deploying ${config.name} to Vercel${options.prod ? ' (production)' : ' (preview)'}…`
       ).start();
 
-      try {
-        const output = execSync(`npx ${vercelArgs}`, {
-          cwd,
-          stdio: 'pipe',
-          env: { ...process.env },
-        }).toString();
+      const chunks = [];
+      const child = spawn('npx', vercelArgs, {
+        cwd,
+        stdio: ['inherit', 'pipe', 'pipe'],
+        env: { ...process.env },
+      });
 
+      child.stdout.on('data', (d) => chunks.push(d));
+      child.stderr.on('data', (d) => chunks.push(d));
+
+      child.on('error', (err) => {
+        spinner.fail('Deployment failed');
+        log.error(err.message);
+        process.exit(1);
+      });
+
+      child.on('close', (code) => {
+        const output = Buffer.concat(chunks).toString();
+        if (code !== 0) {
+          spinner.fail('Deployment failed');
+          log.error(output);
+          process.exit(code || 1);
+        }
         spinner.succeed('Deployment successful!');
-
         const urlMatch = output.match(/https?:\/\/[^\s]+\.vercel\.app/);
         if (urlMatch) {
           log.success(`\nDeployed to: ${urlMatch[0]}\n`);
         } else {
           log.info(output.trim());
         }
-      } catch (err) {
-        spinner.fail('Deployment failed');
-        const output = err.stdout?.toString() || err.stderr?.toString() || err.message;
-        log.error(output);
-        process.exit(1);
-      }
+      });
     });
 
   return cmd;

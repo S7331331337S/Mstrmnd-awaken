@@ -1,5 +1,4 @@
 import { program } from 'commander';
-import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
