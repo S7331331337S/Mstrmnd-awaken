@@ -16,10 +16,22 @@
     "ai",
     "web-development",
     "cli",
-    "vercel"
+    "vercel",
+    "nextjs",
+    "react",
+    "vue",
+    "scaffolding"
   ],
   "author": "Mstrmnd AI",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/S7331331337S/Mstrmnd-awaken.git"
+  },
+  "bugs": {
+    "url": "https://github.com/S7331331337S/Mstrmnd-awaken/issues"
+  },
+  "homepage": "https://github.com/S7331331337S/Mstrmnd-awaken#readme",
   "dependencies": {
     "commander": "^11.1.0",
     "chalk": "^4.1.2",
