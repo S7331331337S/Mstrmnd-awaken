@@ -1,0 +1,35 @@
+{
+  "name": "mstrmnd-awaken",
+  "version": "1.0.0",
+  "description": "CLI to scaffold Mstrmnd web projects and Vercel-ready starters.",
+  "main": "bin/mstrmnd.js",
+  "bin": {
+    "mstrmnd": "bin/mstrmnd.js"
+  },
+  "scripts": {
+    "test": "node ./bin/mstrmnd.js --help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/S7331331337S/Mstrmnd-awaken.git"
+  },
+  "keywords": [
+    "cli",
+    "vercel",
+    "scaffold",
+    "web"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "commander": "^11.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/S7331331337S/Mstrmnd-awaken/issues"
+  },
+  "homepage": "https://github.com/S7331331337S/Mstrmnd-awaken#readme",
+  "dependencies": {
+    "commander": "^11.1.0"
+  }
+}
