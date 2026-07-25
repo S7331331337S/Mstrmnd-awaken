@@ -57,7 +57,7 @@ export function devCommand() {
       child.on('exit', (code) => {
         if (code !== 0) {
           log.error(`Dev server exited with code ${code}`);
-          process.exit(code ?? 1);
+          process.exit(code == null ? 1 : code);
         }
       });
     });
