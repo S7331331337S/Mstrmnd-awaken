@@ -1,51 +1,36 @@
 {
-  "name": "mstrmnd-cli",
-  "version": "0.1.0",
-  "description": "CLI tool for Mstrmnd AI web development",
-  "main": "dist/index.js",
+  "name": "mstrmnd-awaken",
+  "version": "1.0.0",
+  "description": "CLI to scaffold Mstrmnd web projects and Vercel-ready starters.",
+  "main": "bin/mstrmnd.js",
   "bin": {
-    "mstrmnd": "./bin/mstrmnd.js"
+    "mstrmnd": "bin/mstrmnd.js"
   },
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "prepublishOnly": "npm run build"
+    "test": "node ./bin/mstrmnd.js --help"
   },
-  "keywords": [
-    "mstrmnd",
-    "ai",
-    "web-development",
-    "cli",
-    "vercel",
-    "nextjs",
-    "react",
-    "vue",
-    "scaffolding"
-  ],
-  "author": "Mstrmnd AI",
-  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/S7331331337S/Mstrmnd-awaken.git"
+    "url": "git+https://github.com/S7331331337S/Mstrmnd-awaken.git"
   },
+  "keywords": [
+    "cli",
+    "vercel",
+    "scaffold",
+    "web"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/S7331331337S/Mstrmnd-awaken/issues"
   },
   "homepage": "https://github.com/S7331331337S/Mstrmnd-awaken#readme",
   "dependencies": {
-    "commander": "^11.1.0",
     "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.2.0",
     "inquirer": "^8.2.6",
-    "ora": "^5.4.1",
-    "fs-extra": "^11.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.0",
-    "@types/inquirer": "^8.2.10",
-    "@types/fs-extra": "^11.0.4",
-    "typescript": "^5.3.3"
-  },
-  "engines": {
-    "node": ">=16.0.0"
+    "ora": "^5.4.1"
   }
 }

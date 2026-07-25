@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>__APP_TITLE__</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Mstrmnd Awaken</p>
+        <h1>Build web experiences faster with AI guidance.</h1>
+        <p class="lede">
+          This starter gives you a clean slate to experiment with layouts, styles, and client-side logic
+          while staying deploy-ready for Vercel.
+        </p>
+        <div class="actions">
+          <button id="cta-primary">Generate Idea</button>
+          <button id="cta-secondary" class="ghost">Preview Layout</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <header>
+          <h2>Project Notes</h2>
+          <p class="muted">Use the input below to capture your next move.</p>
+        </header>
+        <label class="input-label" for="idea-input">What should we build next?</label>
+        <div class="input-row">
+          <input id="idea-input" type="text" placeholder="Build a dashboard for..." />
+          <button id="idea-submit">Save</button>
+        </div>
+        <ul id="idea-list" class="idea-list"></ul>
+      </section>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
