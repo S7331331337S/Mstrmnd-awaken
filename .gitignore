@@ -1,4 +1,33 @@
-node_modules
+node_modules/
 .vercel
 .DS_Store
 npm-debug.log*
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
