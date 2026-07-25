@@ -51,11 +51,15 @@ export function buildCommand() {
         log.info('Output is ready for deployment. Run `mstrmnd deploy` to push to Vercel.');
       } catch (err) {
         spinner.fail('Build failed');
-        const output = err.stdout?.toString() || err.stderr?.toString() || err.message;
+        const output = formatBuildError(err);
         log.error(output);
         process.exit(1);
       }
     });
 
   return cmd;
+}
+
+function formatBuildError(err) {
+  return err.stdout?.toString() || err.stderr?.toString() || err.message;
 }
