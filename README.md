@@ -1,26 +1,27 @@
-# Mstrmnd AI CLI
+# Mstrmnd CLI
 
-A powerful command-line interface for Mstrmnd AI web development. Quickly scaffold, develop, build, and deploy modern web applications with AI integration.
+TypeScript CLI for scaffolding, developing, and deploying Mstrmnd web projects.
 
 ## Features
 
-- 🚀 **Quick Project Setup** - Initialize new projects with popular frameworks
-- 🤖 **AI Integration** - Optional AI capabilities built-in
-- 📦 **Multiple Templates** - Support for Next.js, React, and Vue
-- 🔧 **Development Server** - Fast development with hot reload
-- 🏗️ **Production Builds** - Optimized builds for deployment
-- ☁️ **Vercel Integration** - Seamless deployment to Vercel
-- ⚙️ **Configuration Management** - Easy project configuration
+- Scaffold Next.js, React (Vite), or Vue (Vite) projects
+- Optional OpenAI stubs (Next.js API route; dependency + guidance for Vite)
+- `dev` / `build` wrappers that respect `mstrmnd.config.json`
+- Vercel deploy via local `vercel` or `npx vercel` (no forced global install)
+- Config get/set/list with deep-merge for nested keys
 
-## Installation
+## Requirements
 
-### Global Installation
+- Node.js >= 18
+- npm
+
+## Install
 
 ```bash
 npm install -g mstrmnd-cli
 ```
 
-### Local Development
+Local development:
 
 ```bash
 git clone https://github.com/S7331331337S/Mstrmnd-awaken.git
@@ -30,138 +31,96 @@ npm run build
 npm link
 ```
 
-## Usage
+## Commands
 
-### Initialize a New Project
-
-Create a new Mstrmnd AI project:
-
-```bash
-mstrmnd init [project-name]
-```
-
-Interactive mode (recommended):
+### init
 
 ```bash
 mstrmnd init
-```
-
-With options:
-
-```bash
 mstrmnd init my-app --template nextjs --ai
+mstrmnd init my-app -t react -y
 ```
 
-**Options:**
-- `-t, --template <template>` - Project template: `nextjs`, `react`, or `vue` (default: `nextjs`)
-- `--ai` - Include AI integration setup
+| Option | Description |
+|--------|-------------|
+| `-t, --template` | `nextjs`, `react`, or `vue` |
+| `--ai` | Include OpenAI stubs |
+| `-y, --yes` | Skip prompts |
 
-### Development Server
-
-Start the development server:
+### dev
 
 ```bash
 mstrmnd dev
-```
-
-**Options:**
-- `-p, --port <port>` - Port to run the server on (default: `3000`)
-- `-H, --host <host>` - Host to bind the server to (default: `localhost`)
-
-Example:
-
-```bash
 mstrmnd dev --port 8080 --host 0.0.0.0
 ```
 
-### Build for Production
-
-Build your project for production:
+### build
 
 ```bash
 mstrmnd build
+mstrmnd build --analyze   # sets ANALYZE=true for Next setups that support it
 ```
 
-**Options:**
-- `--analyze` - Analyze the bundle size
-
-### Deploy to Vercel
-
-Deploy your project to Vercel:
+### deploy
 
 ```bash
 mstrmnd deploy
+mstrmnd deploy --prod --env .env.production -y
 ```
 
-**Options:**
-- `--prod` - Deploy to production (default: preview deployment)
-- `--env <file>` - Environment variables file
+Uses `vercel` when available, otherwise `npx vercel`. Does not install packages globally.
 
-Example:
+### config
 
 ```bash
-mstrmnd deploy --prod --env .env.production
-```
-
-### Configuration Management
-
-Manage project configuration:
-
-```bash
-# List all configuration
 mstrmnd config
-
-# Get a specific value
 mstrmnd config get projectName
-
-# Set a configuration value
-mstrmnd config set aiEnabled true
+mstrmnd config set ai.model gpt-4o-mini
 ```
 
-## Project Structure
+## Generated layout
 
-After initialization, your project will have the following structure:
-
-### Next.js Template
+Next.js:
 
 ```
 my-app/
-├── src/
-│   └── app/
-│       ├── page.tsx
-│       └── layout.tsx
-├── public/
+├── src/app/
+│   ├── page.tsx
+│   ├── layout.tsx
+│   ├── globals.css
+│   └── api/chat/route.ts   # when --ai
 ├── package.json
 ├── tsconfig.json
+├── next.config.mjs
 ├── mstrmnd.config.json
-└── .gitignore
+└── .env.example            # when --ai
 ```
 
-### React/Vue Template
+React / Vue (Vite):
 
 ```
 my-app/
 ├── src/
-│   ├── App.tsx (or App.vue)
-│   └── main.tsx (or main.ts)
-├── public/
 ├── index.html
+├── vite.config.ts
 ├── package.json
 ├── tsconfig.json
-├── vite.config.ts
-├── mstrmnd.config.json
-└── .gitignore
+└── mstrmnd.config.json
 ```
 
-## Configuration File
+## Configuration
 
-The `mstrmnd.config.json` file stores project-specific settings:
+`mstrmnd.config.json`:
 
 ```json
 {
   "projectName": "my-app",
   "template": "nextjs",
   "aiEnabled": true,
+  "ai": {
+    "apiKeyEnvVar": "OPENAI_API_KEY",
+    "model": "gpt-4o-mini"
+  },
   "vercel": {
     "projectId": "...",
     "orgId": "..."
@@ -169,84 +128,21 @@ The `mstrmnd.config.json` file stores project-specific settings:
 }
 ```
 
-## AI Integration
+## AI notes
 
-When you enable AI integration (`--ai` flag), the CLI will:
-
-1. Add OpenAI SDK to your dependencies
-2. Create a `.env.example` file with required environment variables
-3. Set up basic AI integration examples
-
-Remember to add your API keys to `.env.local`:
-
-```bash
-OPENAI_API_KEY=your_api_key_here
-```
-
-## Commands Reference
-
-| Command | Description |
-|---------|-------------|
-| `mstrmnd init [name]` | Initialize a new project |
-| `mstrmnd dev` | Start development server |
-| `mstrmnd build` | Build for production |
-| `mstrmnd deploy` | Deploy to Vercel |
-| `mstrmnd config [action] [key] [value]` | Manage configuration |
-
-## Examples
-
-### Create a Next.js app with AI
-
-```bash
-mstrmnd init my-ai-app --template nextjs --ai
-cd my-ai-app
-npm install
-mstrmnd dev
-```
-
-### Create a React app
-
-```bash
-mstrmnd init my-react-app --template react
-cd my-react-app
-npm install
-mstrmnd dev
-```
-
-### Build and deploy
-
-```bash
-mstrmnd build
-mstrmnd deploy --prod
-```
-
-## Requirements
-
-- Node.js >= 16.0.0
-- npm or yarn
+- Next.js `--ai` adds `openai`, `.env.example`, and `src/app/api/chat/route.ts`.
+- React/Vue `--ai` adds the `openai` dependency and a stub that points you at a backend — do not put secret keys in Vite client code.
+- Set `OPENAI_API_KEY` in `.env.local` (Next.js) before calling the sample route.
 
 ## Development
 
-### Building the CLI
-
 ```bash
+npm install
 npm run build
-```
-
-### Watch mode
-
-```bash
-npm run dev
+npm test
+npm run dev    # tsc --watch
 ```
 
 ## License
 
 MIT
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Support
-
-For issues and questions, please open an issue on [GitHub](https://github.com/S7331331337S/Mstrmnd-awaken/issues).

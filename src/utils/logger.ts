@@ -6,8 +6,9 @@ export const logger = {
   warning: (message: string) => console.log(chalk.yellow('⚠'), message),
   error: (message: string) => console.error(chalk.red('✖'), message),
   command: (message: string) => console.log(chalk.cyan('$'), chalk.dim(message)),
+  dim: (message: string) => console.log(chalk.dim(message)),
 };
 
 export const formatTitle = (title: string): string => {
-  return chalk.bold.magenta(`\n${title}\n`);
+  return chalk.bold.cyan(`\n${title}\n`);
 };
